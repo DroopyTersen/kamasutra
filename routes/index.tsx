@@ -1,8 +1,8 @@
 /** @jsx h */
 import { h } from "preact";
 import { Handlers, PageProps } from "$fresh/server.ts";
-import { generateRandomSexMove } from "../generators/generators.ts";
-
+import { generateRandomSexMove, getRandom } from "../generators/generators.ts";
+import GenerateButton from "../islands/GenerateButton.tsx";
 export const handler: Handlers = {
   async GET(_, ctx) {
     const name = await generateRandomSexMove();
@@ -14,12 +14,7 @@ export default function Home({ data }: PageProps<{ name: string }>) {
   return (
     <div id="root">
       <link href="/styles.css" rel="stylesheet" />
-      <div>
-        <h1 class="move-name">{data.name}</h1>
-        <form>
-          <button>Again!</button>
-        </form>
-      </div>
+      <GenerateButton name={data.name}></GenerateButton>
     </div>
   );
 }
