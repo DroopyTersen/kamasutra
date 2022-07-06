@@ -4,7 +4,6 @@ abate
 abbreviate
 abdicate
 abduct
-abet
 abhor
 abide
 abjure

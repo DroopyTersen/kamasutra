@@ -9,17 +9,7 @@ const buttonLabels = [
   "Again!",
   "More!",
 ];
-export const sounds = [
-  "glug-b.mp3",
-  "glug-b.mp3",
-  "pop-down.mp3",
-  "pop.mp3",
-  "pop.mp3",
-  "ooh.mp3",
-  "man-moan.mp3",
-  "karate.mp3",
-  "creaky2.mp3",
-];
+export const sounds = ["glug-b.mp3", "pop.mp3", "ooh.mp3"];
 // The target date is passed as a string instead of as a `Date`, because the
 // props to island components need to be JSON (de)serializable.
 export default function GenerateButton({ name }: { name: string }) {
@@ -40,8 +30,14 @@ export default function GenerateButton({ name }: { name: string }) {
       <div style={{ width: "100%" }}>
         <button
           class="pushable"
-          onClick={async () => {
+          onMouseDown={() => {
             audioRef?.current?.play();
+          }}
+          onTouchStart={() => {
+            audioRef?.current?.play();
+          }}
+          onClick={async () => {
+            // audioRef?.current?.play();
 
             const newMove = await fetch("/api/random").then((r) => r.text());
             setMove(newMove);
