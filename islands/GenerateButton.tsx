@@ -1,6 +1,6 @@
 /** @jsx h */
 import { h } from "preact";
-import { useEffect, useState } from "preact/hooks";
+import { useEffect, useState, useRef } from "preact/hooks";
 import { getRandom } from "../generators/generators.ts";
 
 const buttonLabels = [
@@ -25,6 +25,14 @@ export const sounds = [
 export default function GenerateButton({ name }: { name: string }) {
   const [move, setMove] = useState(name);
   const [buttonLabel, setButtonLabel] = useState(() => getRandom(buttonLabels));
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+  useEffect(() => {
+    audioRef.current = new Audio("/sounds/" + getRandom(sounds));
+    audioRef.current.onended = () => {
+      const sound = "/sounds/" + getRandom(sounds);
+      (audioRef.current as any).src = sound;
+    };
+  }, []);
   return (
     <div class="main-layout">
       <h1 class="move-name">{move}</h1>
@@ -33,7 +41,8 @@ export default function GenerateButton({ name }: { name: string }) {
         <button
           class="pushable"
           onClick={async () => {
-            new Audio("/sounds/" + getRandom(sounds)).play();
+            audioRef?.current?.play();
+
             const newMove = await fetch("/api/random").then((r) => r.text());
             setMove(newMove);
             setButtonLabel(getRandom(buttonLabels));
