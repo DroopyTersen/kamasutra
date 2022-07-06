@@ -9,7 +9,7 @@ const buttonLabels = [
   "Again!",
   "More!",
 ];
-const sounds = [
+export const sounds = [
   "glug-b.mp3",
   "glug-b.mp3",
   "pop-down.mp3",
